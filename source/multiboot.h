@@ -47,6 +47,14 @@ struct multiboot_elf_info
 };
 typedef multiboot_elf_info	multiboot_t_elf_info;
 
+struct multiboot_mmap
+{
+	multiboot_t_u32		size;
+	multiboot_t_u64		base_addr;
+	multiboot_t_u64		length;
+	multiboot_t_u32		type;
+};
+typedef multiboot_mmap		multiboot_t_mmap;
 
 struct multiboot_info
 {
