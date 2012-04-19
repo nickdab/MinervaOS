@@ -3,13 +3,26 @@
 
 /*These are all the options available for MULTIBOOT_FLAGS*/
 
-#define FLAGS_PAGE_ALIGNED	0x00000001	// sets bit [0], meaning all boot modules have to be aligned to page (4K) boundries
-#define FLAGS_MEM_INFO		0x00000002	// sets bit [1], meaning info on memory will be provided through at least the mem_* structure
-#define FLAGS_VMT_INFO		0x00000004	// sets bit [2], meaning we will provide info about the video mode we want
-#define FLAGS_ADDR_TABLE	0x00010000	// sets bit [16], meaning that we are provided address information (only if the OS isn't in ELF format)
+#define FLAGS_PAGE_ALIGNED		0x00000001	// sets bit [0], meaning all boot modules have to be aligned to page (4K) boundries
+#define FLAGS_MEM_INFO			0x00000002	// sets bit [1], meaning info on memory will be provided through at least the mem_* structure
+#define FLAGS_VMT_INFO			0x00000004	// sets bit [2], meaning we will provide info about the video mode we want
+#define FLAGS_ADDR_TABLE		0x00010000	// sets bit [16], meaning that we are provided address information (only if the OS isn't in ELF format)
 
-#define MULTIBOOT_MAGIC		0x1BADB002
-#define MULTIBOOT_FLAGS 	(FLAGS_PAGE_ALIGNED)	// sets bit [2] -- we have to provide info about Video Mode Table
+#define MULTIBOOT_MAGIC			0x1BADB002
+#define MULTIBOOT_FLAGS 	(FLAGS_PAGE_ALIGNED | FLAGS_VMT_INFO)	// sets bit [2] -- we have to provide info about Video Mode Table
+
+/*These only matter if flag[16] is set*/
+#define MULTIBOOT_HEADER_ADDR		0x00000000
+#define MULTIBOOT_LOAD_ADDR		0x00000000
+#define MULTIBOOT_LOAD_END_ADDR		0x00000000
+#define MULTIBOOT_BSS_END_ADDR		0x00000000
+#define MULTIBOOT_ENTRY_ADDR		0x00000000
+
+/*These only matter if flag[2] is set */
+#define MULTIBOOT_GRAPHICS_MODE_TYPE	0x00000000	//set bit 0 for text, reset for graphics
+#define MULTIBOOT_GRAPHICS_WIDTH	0		//we don't care
+#define MULTIBOOT_GRAPHICS_HEIGHT	0		//we don't care
+#define MULTIBOOT_GRAPHICS_DEPTH	0		//we don't care
 
 #ifndef ASM_FILE
 
@@ -110,5 +123,5 @@ struct multiboot_info
 };
 typedef multiboot_info		multiboot_t_info;
 
-
+#endif //ASM_FILE
 #endif
