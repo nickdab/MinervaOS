@@ -19,7 +19,7 @@
 #define MULTIBOOT_ENTRY_ADDR		0x00000000
 
 /*These only matter if flag[2] is set */
-#define MULTIBOOT_GRAPHICS_MODE_TYPE	0x00000000	//set bit 0 for text, reset for graphics
+#define MULTIBOOT_GRAPHICS_MODE_TYPE	0x00000001	//set bit 0 for text, reset for graphics
 #define MULTIBOOT_GRAPHICS_WIDTH	0		//we don't care
 #define MULTIBOOT_GRAPHICS_HEIGHT	0		//we don't care
 #define MULTIBOOT_GRAPHICS_DEPTH	0		//we don't care
@@ -40,7 +40,7 @@ struct multiboot_mods
 	
 	multiboot_t_u32		reserved;
 };
-typedef multiboot_mods 		multiboot_t_mods;
+typedef struct multiboot_mods 	multiboot_t_mods;
 
 struct multiboot_aout_info
 {
@@ -49,7 +49,7 @@ struct multiboot_aout_info
 	multiboot_t_u32		addr;
 	multiboot_t_u32		reserved;
 };
-typedef multiboot_aout_info	multiboot_t_aout_info;
+typedef struct multiboot_aout_info	multiboot_t_aout_info;
 
 struct multiboot_elf_info
 {
@@ -58,7 +58,7 @@ struct multiboot_elf_info
 	multiboot_t_u32		addr;
 	multiboot_t_u32		shndx;
 };
-typedef multiboot_elf_info	multiboot_t_elf_info;
+typedef struct multiboot_elf_info	multiboot_t_elf_info;
 
 struct multiboot_mmap
 {
@@ -67,7 +67,7 @@ struct multiboot_mmap
 	multiboot_t_u64		length;
 	multiboot_t_u32		type;
 };
-typedef multiboot_mmap		multiboot_t_mmap;
+typedef struct multiboot_mmap		multiboot_t_mmap;
 
 struct multiboot_info
 {
@@ -121,7 +121,7 @@ struct multiboot_info
 	multiboot_t_u16		vbe_interfcace_off;
 	multiboot_t_u16		vbe_interface_len;
 };
-typedef multiboot_info		multiboot_t_info;
+typedef struct multiboot_info		multiboot_t_info;
 
 #endif //ASM_FILE
 #endif
