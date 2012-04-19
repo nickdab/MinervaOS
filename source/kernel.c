@@ -1,6 +1,6 @@
-#include "Multiboot.h"
+#include "multiboot.h"
 
 void kmain()
 {
-	return 0;
+	return ;
 }
