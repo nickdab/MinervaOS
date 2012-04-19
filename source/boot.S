@@ -29,7 +29,7 @@ multiboot_entry:
 	call kmain
 	
 	pushl $halt_message
-	/* call printf*/
+	/*call printf*/
 
 loop:
 	hlt
