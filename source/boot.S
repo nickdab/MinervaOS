@@ -1,4 +1,6 @@
+#define ASM_FILE	1
 #include "multiboot.h"
+
 
 #define STACK_SIZE	0x4000
 
