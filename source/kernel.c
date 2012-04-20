@@ -30,9 +30,51 @@ void kmain(unsigned long magic, unsigned long addr)
 		return;
 	}
 	
-	printf("%x\n%x\n%x\n%x",100, 16, 437, 99812321 );
+	if (CHECK_FLAG(mbi->flags,0))
+	{
+		//mem_* fields are valid
+		printf("LOWMEM: %dK, HIGHMEM: %dK\n",mbi->mem_lower,mbi->mem_upper);	
+	}
+	else
+	{
+		printf("No memory information present.\n");
+	}
 	
+	if (CHECK_FLAG(mbi->flags,1))
+	{
+		//"boot device" field valid
+		multiboot_t_u32 dev_num = mbi->boot_device;		
 
+		dev_num = ((dev_num & 0xFF000000) >> 24);		//this zeros out all but the highest byte, which has the drive no. in it, then moves it to the lsb	
+
+		printf("Device number is %x, ",dev_num);
+		
+		multiboot_t_u32 top_partition = mbi->boot_device;
+		
+		top_partition = ((top_partition & 0x00FF0000) >> 16);
+		
+		printf("Top-Level Partition number: %x",top_partition);
+	
+		multiboot_t_u32 sub_partition = mbi->boot_device;
+		
+		sub_partition = ((sub_partition & 0x0000FF00) >> 8);
+		
+		if (sub_partition != 0xFF)
+		{
+			printf(", sub partition: %x",sub_partition);
+		}
+		
+		multiboot_t_u32 sub_sub_partition = mbi->boot_device;
+		
+		sub_sub_partition = ((sub_sub_partition & 0x000000FF));
+		
+		if (sub_sub_partition != 0xFF)
+		{
+			printf(", sub-sub partition: %x",sub_sub_partition);
+		}
+
+		printf("\n");
+	}
 	return ;
 }
 
@@ -110,6 +152,11 @@ void printf(const char *format, ...)
 			switch(c)
 			{
 				case 'd':
+					itoa(*((int *)arg++),buf,'d');
+					p=buf;
+					goto string;
+					break;
+					
 				case 'u':
 				case 'x':
 					itoa(*((int *)arg++),buf,'x');
@@ -174,6 +221,7 @@ static void itoa(int value,char *buf, int base)
 		p2--;
 	} 
 	
+	//add "0x" for hex numbers
 	if (base == 'x')
 	{
 		for (str; str >= buf; str--)
