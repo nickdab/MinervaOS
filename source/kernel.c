@@ -164,6 +164,7 @@ static void itoa(int value,char *buf, int base)
 	p1 = buf;
 	p2= str-1;
 	
+	//now we have to reverse the string so it comes out right
 	while (p1 < p2)
 	{
 		char tmp = *p1;
@@ -173,5 +174,17 @@ static void itoa(int value,char *buf, int base)
 		p2--;
 	} 
 	
-}
+	if (base == 'x')
+	{
+		for (str; str >= buf; str--)
+		{
+			*(str+2) = *str;
+			
+		}
+		
+		*buf = '0';
+		*(buf+1) = 'x';
+	}
+				
 	
+}	
