@@ -1,1 +1,6 @@
 MinervaOS is a multiboot compliant Operating System written in C. The goal is for it to pick up where NickOS leaves off, in terms of becoming a full-fledged operating system.
+
+All files contained in this are copyright (c) Nick Birney according to the GNU GPLv3.0 License.
+Please see file COPYING for more information.
+
+All code in this file is under NO WARRANTY, either express or implied.
