@@ -9,7 +9,7 @@
 #define FLAGS_ADDR_TABLE		0x00010000	// sets bit [16], meaning that we are provided address information (only if the OS isn't in ELF format)
 
 #define MULTIBOOT_MAGIC			0x1BADB002
-#define MULTIBOOT_FLAGS 	(FLAGS_PAGE_ALIGNED | FLAGS_VMT_INFO)	// sets bit [2] -- we have to provide info about Video Mode Table
+#define MULTIBOOT_FLAGS 	(FLAGS_VMT_INFO)	// sets bit [2] -- we have to provide info about Video Mode Table
 
 /*These only matter if flag[16] is set*/
 #define MULTIBOOT_HEADER_ADDR		0x00000000
@@ -19,7 +19,7 @@
 #define MULTIBOOT_ENTRY_ADDR		0x00000000
 
 /*These only matter if flag[2] is set */
-#define MULTIBOOT_GRAPHICS_MODE_TYPE	0x00000001	//set bit 0 for text, reset for graphics
+#define MULTIBOOT_GRAPHICS_MODE_TYPE	0x00000000	//set bit 0 for text, reset for graphics
 #define MULTIBOOT_GRAPHICS_WIDTH	0		//we don't care
 #define MULTIBOOT_GRAPHICS_HEIGHT	0		//we don't care
 #define MULTIBOOT_GRAPHICS_DEPTH	0		//we don't care
