@@ -81,7 +81,7 @@ struct multiboot_drive_info
 	multiboot_t_u8		drive_heads;
 	multiboot_t_u8		drive_sectors;
 	
-	//this last one is an unspecified number
+	//this last one is a pointer to an array of the drive ports
 	multiboot_t_u16		drive_ports;
 };
 typedef struct multiboot_drive_info	multiboot_t_drive_info;

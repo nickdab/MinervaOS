@@ -128,8 +128,7 @@ void kmain(unsigned long magic, unsigned long addr)
 		{
 			printf("Memory map %i:\n",i);
 
-			printf("base address: 0x%x\n",(mmap_info_p->base_addr));	
-
+			printf("base address: 0x%x\n",(mmap_info_p->base_addr));
 			printf("length: 0x%x\n",(mmap_info_p->length));
 
 			//note, there is a problem with these being 64 bit numbers, but i dont know what to do about it
