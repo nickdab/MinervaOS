@@ -33,7 +33,7 @@ void kmain(unsigned long magic, unsigned long addr)
 	if (CHECK_FLAG(mbi->flags,0))
 	{
 		//mem_* fields are valid
-		printf("LOWMEM: %dK, HIGHMEM: %dK\n",mbi->mem_lower,mbi->mem_upper);	
+		printf("LOWMEM: %iK, HIGHMEM: %iK\n",mbi->mem_lower,mbi->mem_upper);	
 	}
 	else
 	{
@@ -53,7 +53,7 @@ void kmain(unsigned long magic, unsigned long addr)
 		
 		top_partition = ((top_partition & 0x00FF0000) >> 16);
 		
-		printf("Top-Level Partition number: %x",top_partition);
+		printf("Top-Level Partition number: %d",top_partition);
 	
 		multiboot_t_u32 sub_partition = mbi->boot_device;
 		
@@ -75,6 +75,81 @@ void kmain(unsigned long magic, unsigned long addr)
 
 		printf("\n");
 	}
+	
+	if (CHECK_FLAG(mbi->flags,2))
+	{
+		//cmdline field valid
+		
+		printf("cmdline: \"%s\"\n",mbi->cmdline);
+	}
+	else
+	{
+		printf("no cmdline field.\n");
+	}
+	
+	if (CHECK_FLAG(mbi->flags,3))
+	{
+		//mods field valid
+		printf("There are %i modules.\n",mbi->mods_count);
+	}
+	else
+	{
+		printf("Mods flag invalid");
+	}
+	
+	if (CHECK_FLAG(mbi->flags,4))
+	{
+		//a.out file extensions valid
+		printf("a.out tabsize: %x\n",mbi->u.aout_sym.tabsize);
+	}
+	else
+	{
+		printf("a.out field invalid.\n");
+	}
+	
+	if (CHECK_FLAG(mbi->flags,5))
+	{
+		printf("ELF num: %i\n", mbi->u.elf_sec.num);
+	}
+	else
+	{
+		printf("ELF field invalid.\n");
+	}
+	
+	if (CHECK_FLAG(mbi->flags,6))
+	{
+		//memory map information valid
+		multiboot_t_mmap *mmap_info_p = (multiboot_t_mmap *)mbi->mmap_addr;
+		printf("%i, %i",mbi->mmap_length, mmap_info_p->size);
+	
+		int i = 0;
+
+		while ((unsigned long )mmap_info_p < (mbi->mmap_addr + mbi->mmap_length))
+		{
+			printf("Memory map %i:\n",i);
+
+			printf("base address: 0x%x\n",(mmap_info_p->base_addr));	
+
+			printf("length: 0x%x\n",(mmap_info_p->length));
+
+			//note, there is a problem with these being 64 bit numbers, but i dont know what to do about it
+			
+			if (mmap_info_p->type == 1)
+			{
+				printf("Available\n\n");
+			}
+			else
+			{
+				printf("Not Available\n\n");
+			}
+			
+			mmap_info_p =(multiboot_t_mmap *) ((unsigned long )mmap_info_p + mmap_info_p->size+sizeof(mmap_info_p->size));
+			i++;
+		}
+	}
+	
+	
+	
 	return ;
 }
 
@@ -85,11 +160,8 @@ void newline()
 
 	if (ypos >= LINES)
 	{
-		for (int i = 0; i < LINES-1; i++)
-		{
-			*(video + (xpos+ypos * COLUMNS) * 2) = *(video + (xpos+(ypos+1) * COLUMNS) *2);
-		}
-		ypos--;
+		cls();
+		ypos=0;
 	}
 }
 		 
@@ -150,7 +222,9 @@ void printf(const char *format, ...)
 			c = *format++;
 			
 			switch(c)
-			{
+			{	
+				case 'i':
+					//goto case 'd'
 				case 'd':
 					itoa(*((int *)arg++),buf,'d');
 					p=buf;
@@ -219,20 +293,5 @@ static void itoa(int value,char *buf, int base)
 		*p2=tmp;
 		p1++;
 		p2--;
-	} 
-	
-	//add "0x" for hex numbers
-	if (base == 'x')
-	{
-		for (str; str >= buf; str--)
-		{
-			*(str+2) = *str;
-			
-		}
-		
-		*buf = '0';
-		*(buf+1) = 'x';
-	}
-				
-	
+	} 	
 }	
