@@ -69,6 +69,23 @@ struct multiboot_mmap
 };
 typedef struct multiboot_mmap		multiboot_t_mmap;
 
+struct multiboot_drive_info
+{
+	multiboot_t_u32		size;
+
+	multiboot_t_u8		drive_number;
+
+	multiboot_t_u8		drive_mode;
+
+	multiboot_t_u16		drive_cylinders;
+	multiboot_t_u8		drive_heads;
+	multiboot_t_u8		drive_sectors;
+	
+	//this last one is an unspecified number
+	multiboot_t_u16		drive_ports;
+};
+typedef struct multiboot_drive_info	multiboot_t_drive_info;
+
 struct multiboot_info
 {
 	//flags set by bootloader

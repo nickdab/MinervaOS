@@ -147,6 +147,11 @@ void kmain(unsigned long magic, unsigned long addr)
 			i++;
 		}
 	}
+
+	if (CHECK_FLAG(mbi->flags,7))
+	{
+		//Drive info availale
+	}
 	
 	
 	
