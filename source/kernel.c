@@ -120,7 +120,6 @@ void kmain(unsigned long magic, unsigned long addr)
 	{
 		//memory map information valid
 		multiboot_t_mmap *mmap_info_p = (multiboot_t_mmap *)mbi->mmap_addr;
-		printf("%i, %i",mbi->mmap_length, mmap_info_p->size);
 	
 		int i = 0;
 
@@ -150,6 +149,24 @@ void kmain(unsigned long magic, unsigned long addr)
 	if (CHECK_FLAG(mbi->flags,7))
 	{
 		//Drive info availale
+		printf("Drive info available.\n");
+	}
+	
+	if (CHECK_FLAG(mbi->flags,8))
+	{
+		printf("configuration table available.\n");
+	}
+	
+	if (CHECK_FLAG(mbi->flags,9))
+	{
+		//bootloader name available
+		printf("Bootloader name: %si\n",mbi->bootloader_name);
+	}
+	
+	if (CHECK_FLAG(mbi->flags,10))
+	{
+		//apm table available
+		printf("APM available\n");
 	}
 	
 	
@@ -161,11 +178,19 @@ void newline()
 {
 	xpos=0;
 	ypos++;
+	video = (unsigned char *)VIDEO;
 
 	if (ypos >= LINES)
 	{
-		cls();
-		ypos=0;
+		ypos--;
+		
+		for (int i = 0; i < LINES; i++)
+		{
+			for (int n = 0; n < COLUMNS; n++)
+			{
+				*(video + ((i+1)+n+COLUMNS)*2) = *(video + (i+n+COLUMNS)*2);
+			}
+		}
 	}
 }
 		 
