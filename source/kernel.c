@@ -181,9 +181,9 @@ void newline()
 
 	if (ypos >= LINES)
 	{	
+		video = (volatile unsigned char *) VIDEO;
 		for (int i = 0; i < (((COLUMNS*LINES)*2)-1); i++)
-		{
-			video = (volatile unsigned char *) VIDEO;	
+		{	
 			*(video + i) = *((video + i)+(COLUMNS*2));
 		}
 		ypos--;	
