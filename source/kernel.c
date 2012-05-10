@@ -178,19 +178,10 @@ void newline()
 {
 	xpos=0;
 	ypos++;
-	video = (unsigned char *)VIDEO;
 
 	if (ypos >= LINES)
-	{
-		ypos--;
-		
-		for (int i = 0; i < LINES; i++)
-		{
-			for (int n = 0; n < COLUMNS; n++)
-			{
-				*(video + ((i+1)+n+COLUMNS)*2) = *(video + (i+n+COLUMNS)*2);
-			}
-		}
+	{	
+		cls();	
 	}
 }
 		 

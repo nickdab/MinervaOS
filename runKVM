@@ -1,0 +1,1 @@
+kvm -vnc :0 -m 4G -kernel bin/kernel
