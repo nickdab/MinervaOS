@@ -125,6 +125,8 @@ void kmain(unsigned long magic, unsigned long addr)
 
 		while ((unsigned long )mmap_info_p < (mbi->mmap_addr + mbi->mmap_length))
 		{
+				printf("mem type: %i\n",mmap_info_p->type);
+	/*		
 			printf("Memory map %i:\n",i);
 
 			printf("base address: 0x%x\n",(mmap_info_p->base_addr));
@@ -134,13 +136,9 @@ void kmain(unsigned long magic, unsigned long addr)
 			
 			if (mmap_info_p->type == 1)
 			{
-				printf("Available\n\n");
+				printf("Available\n");
 			}
-			else
-			{
-				printf("Not Available\n\n");
-			}
-			
+	*/		
 			mmap_info_p =(multiboot_t_mmap *) ((unsigned long )mmap_info_p + mmap_info_p->size+sizeof(mmap_info_p->size));
 			i++;
 		}
@@ -212,7 +210,7 @@ static void putchar(int c)
 	}
 }
 
-static void cls(void)
+static void cls()
 {
 	int i;
 

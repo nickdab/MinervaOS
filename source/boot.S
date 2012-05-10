@@ -40,13 +40,13 @@ multiboot_entry:
 	call kmain
 	
 	pushl $halt_message
-	/*call printf*/
+	call printf
 
 loop:
 	hlt
 	jmp loop
 
 halt_message:
-	.asciz "Halted."
+	.asciz "\nHalted."
 	
 	.comm stack, STACK_SIZE
